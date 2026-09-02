@@ -4,12 +4,12 @@ E-commerce is a type of retail that takes place online, meaning that instead of 
 ## create virtual environment
 python3 -m venv venv
 
-## activate virtual environment
+### activate virtual environment
 source venv/Scripts/activate
 
-## deactivate virtual environment
+### deactivate virtual environment
 deactivate
 
-## install dependencies
+### install dependencies
 pip install fastapi uvicorn
 
