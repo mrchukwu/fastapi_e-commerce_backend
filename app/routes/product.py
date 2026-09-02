@@ -1,18 +1,20 @@
 from fastapi import APIRouter
+from app.schemas.product import ProductCreate, ProductResponse
+
+from app.data.product_data import products_list
 
 router = APIRouter(
   prefix = "/products"
 )
 
-@router.post("")
-def create_product():
-    return {"message": "product created"}
 
-@router.get("")
-def get_products():
-  return {
-    "message": "Products fetched successfully"
-  }
+@router.post("")
+def create_product(product: ProductCreate):
+    return {"message": "product created", "product": product}
+
+@router.get("", response_model=list[ProductResponse])
+def get_products(products: list[ProductResponse] = products_list):
+  return products
 
 @router.get("/{product_id}")
 def get_product_by_id(product_id: int):

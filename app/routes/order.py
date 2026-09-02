@@ -1,13 +1,16 @@
 from fastapi import APIRouter
 
+from app.schemas.order import ResponseOrder, ResponseOrderItem, CustomerAddress, CreateOrder
+
 router = APIRouter(
   prefix="/orders"
 )
 
 @router.post("")
-def create_order():
+def create_order(order:CreateOrder):
   return {
-    "message": "order created"
+    "message": "order created",
+    "order": order
   }
 
 @router.get("")
