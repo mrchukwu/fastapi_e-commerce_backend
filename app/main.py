@@ -1,8 +1,7 @@
 from fastapi import FastAPI, Body
 from pydantic import BaseModel, Field
 
-from app.routes import category
-from app.routes import product
+from app.routes import product, category, order
 
 app = FastAPI()
 
@@ -13,3 +12,4 @@ def check():
 
 app.include_router(product.router)
 app.include_router(category.router)
+app.include_router(order.router)
