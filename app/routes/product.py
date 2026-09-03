@@ -1,7 +1,9 @@
-from fastapi import APIRouter
+from app.dependencies import get_pagination
+from fastapi import APIRouter, Depends
 from app.schemas.product import ProductCreate, ProductResponse
 
 from app.data.product_data import products_list
+from app.dependencies import get_store_name
 
 router = APIRouter(
   prefix = "/products"
@@ -9,12 +11,21 @@ router = APIRouter(
 
 
 @router.post("")
-def create_product(product: ProductCreate):
-    return {"message": "product created", "product": product}
+def create_product(product: ProductCreate, store_name: str = Depends(get_store_name)):
+    return {
+      "message": "product created", 
+      "product": product,
+      "store_name": store_name
+    }
 
-@router.get("", response_model=list[ProductResponse])
-def get_products(products: list[ProductResponse] = products_list):
-  return products
+@router.get("")
+def get_products(pagination: dict = Depends(get_pagination)):
+  return {
+    "message": "product fetched successfully",
+    "skip": pagination["skip"],
+    "limit": pagination["limit"],
+    
+  }
 
 @router.get("/{product_id}")
 def get_product_by_id(product_id: int):

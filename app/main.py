@@ -10,9 +10,17 @@ app = FastAPI(
 )
 
 
-@app.get("/")
-def check():
-    return {"message": "hello world"}
+@app.get("/app-info")
+def app_info():
+    return {
+      "app_name": settings.app_name,
+      "app_version": settings.app_version,
+      "admin_email": settings.admin_email,
+      "api_prefix": settings.api_prefix,
+      "description": "FastAPI Ecommerce Backend",
+      "docs": f"{settings.api_prefix}/docs",
+      "redoc": f"{settings.api_prefix}/redoc"
+    }
 
 app.include_router(product.router, prefix=settings.api_prefix)
 app.include_router(category.router, prefix=settings.api_prefix)
