@@ -1,3 +1,4 @@
+from app.dependencies import get_sorting
 from app.dependencies import get_pagination
 from fastapi import APIRouter, Depends
 from app.schemas.product import ProductCreate, ProductResponse
@@ -19,11 +20,13 @@ def create_product(product: ProductCreate, store_name: str = Depends(get_store_n
     }
 
 @router.get("")
-def get_products(pagination: dict = Depends(get_pagination)):
+def get_products(pagination: dict = Depends(get_pagination), sort: dict = Depends(get_sorting)):
   return {
     "message": "product fetched successfully",
     "skip": pagination["skip"],
     "limit": pagination["limit"],
+    "sort_by": sort["sort_by"],
+    "order": sort["order"],
     
   }
 
